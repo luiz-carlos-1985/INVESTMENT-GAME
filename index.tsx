@@ -12,6 +12,7 @@ import { TutorialModal } from './components/TutorialModal'
 import { AdvancedPortfolio } from './components/AdvancedPortfolio'
 import { TradingInterface } from './components/TradingInterface'
 import { MarketOverview } from './components/MarketOverview'
+import { UpgradeModal } from './components/UpgradeModal'
 import { saveGameData, loadGameData, getDefaultGameData } from './utils/storage'
 import { achievements, checkAchievements, Achievement } from './utils/achievements'
 import { updateStockPrices, getMarketTrend, generateMarketNews, calculateMarketData } from './utils/market'
@@ -39,6 +40,7 @@ function GameContent() {
   const [marketNews, setMarketNews] = useState<string[]>([])
   const [showSettings, setShowSettings] = useState(false)
   const [showTutorial, setShowTutorial] = useState(false)
+  const [showUpgrade, setShowUpgrade] = useState(false)
   const [selectedStock, setSelectedStock] = useState<Stock | null>(null)
   const [marketChartData, setMarketChartData] = useState<any[]>([])
 
@@ -268,8 +270,8 @@ function GameContent() {
   const [showPremium, setShowPremium] = useState(false)
 
   return (
-    <div className="min-h-screen text-white p-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen text-white p-2 md:p-6 overflow-x-hidden">
+      <div className="max-w-7xl mx-auto w-full">
         {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
@@ -277,22 +279,23 @@ function GameContent() {
           className="mb-8"
         >
           <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center">
+            <div className="flex items-center min-w-0">
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                className="flex-shrink-0"
               >
-                <Coins className="w-10 h-10 text-emerald-400 mr-3" />
+                <Coins className="w-8 h-8 md:w-10 md:h-10 text-emerald-400 mr-2 md:mr-3" />
               </motion.div>
-              <div>
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+              <div className="min-w-0">
+                <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent truncate">
                   Micro Investment Game
                 </h1>
-                <p className="text-lg text-gray-300">Start small, dream big! 🚀</p>
+                <p className="text-sm md:text-lg text-gray-300 truncate">Start small, dream big! 🚀</p>
               </div>
             </div>
             
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 md:space-x-4 flex-shrink-0">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -347,13 +350,15 @@ function GameContent() {
               
               {user && !user.isPremium && (
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, boxShadow: "0 8px 20px rgba(245, 158, 11, 0.3)" }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => setShowPremium(true)}
-                  className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-4 py-2 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2"
+                  onClick={() => setShowUpgrade(true)}
+                  className="relative bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-600 hover:from-yellow-600 hover:to-orange-600 text-white px-5 py-2.5 rounded-xl font-bold transition-all duration-300 flex items-center space-x-2 shadow-lg overflow-hidden group"
                 >
-                  <Crown className="w-4 h-4" />
-                  <span>Go Premium</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <Crown className="w-4 h-4 relative z-10" />
+                  <span className="relative z-10">Go Premium</span>
+                  <div className="w-2 h-2 bg-white rounded-full animate-pulse relative z-10" />
                 </motion.button>
               )}
             </div>
@@ -367,42 +372,42 @@ function GameContent() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-8"
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4 mb-6 md:mb-8 overflow-hidden"
         >
-          <div className="glass-green rounded-2xl p-4 text-center">
-            <DollarSign className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
-            <h3 className="text-xl font-bold text-emerald-400">${balance.toLocaleString()}</h3>
-            <p className="text-gray-400 text-xs">Cash Balance</p>
+          <div className="glass-green rounded-xl md:rounded-2xl p-2 md:p-4 text-center min-w-0">
+            <DollarSign className="w-4 h-4 md:w-6 md:h-6 text-emerald-400 mx-auto mb-1 md:mb-2" />
+            <h3 className="text-sm md:text-xl font-bold text-emerald-400 truncate">${balance.toLocaleString()}</h3>
+            <p className="text-gray-400 text-xs truncate">Cash Balance</p>
           </div>
           
-          <div className="glass-green rounded-2xl p-4 text-center">
-            <TrendingUp className="w-6 h-6 text-cyan-400 mx-auto mb-2" />
-            <h3 className="text-xl font-bold text-cyan-400">${totalPortfolioValue.toLocaleString()}</h3>
-            <p className="text-gray-400 text-xs">Portfolio Value</p>
+          <div className="glass-green rounded-xl md:rounded-2xl p-2 md:p-4 text-center min-w-0">
+            <TrendingUp className="w-4 h-4 md:w-6 md:h-6 text-cyan-400 mx-auto mb-1 md:mb-2" />
+            <h3 className="text-sm md:text-xl font-bold text-cyan-400 truncate">${totalPortfolioValue.toLocaleString()}</h3>
+            <p className="text-gray-400 text-xs truncate">Portfolio Value</p>
           </div>
           
-          <div className="glass-green rounded-2xl p-4 text-center">
-            <BarChart3 className="w-6 h-6 text-purple-400 mx-auto mb-2" />
-            <h3 className="text-xl font-bold text-purple-400">${(balance + totalPortfolioValue).toLocaleString()}</h3>
-            <p className="text-gray-400 text-xs">Total Value</p>
+          <div className="glass-green rounded-xl md:rounded-2xl p-2 md:p-4 text-center min-w-0">
+            <BarChart3 className="w-4 h-4 md:w-6 md:h-6 text-purple-400 mx-auto mb-1 md:mb-2" />
+            <h3 className="text-sm md:text-xl font-bold text-purple-400 truncate">${(balance + totalPortfolioValue).toLocaleString()}</h3>
+            <p className="text-gray-400 text-xs truncate">Total Value</p>
           </div>
           
-          <div className="glass-green rounded-2xl p-4 text-center">
-            <Trophy className="w-6 h-6 text-yellow-400 mx-auto mb-2" />
-            <h3 className="text-xl font-bold text-yellow-400">Level {level}</h3>
-            <p className="text-gray-400 text-xs">{xp}/{level * 100} XP</p>
+          <div className="glass-green rounded-xl md:rounded-2xl p-2 md:p-4 text-center min-w-0">
+            <Trophy className="w-4 h-4 md:w-6 md:h-6 text-yellow-400 mx-auto mb-1 md:mb-2" />
+            <h3 className="text-sm md:text-xl font-bold text-yellow-400 truncate">Level {level}</h3>
+            <p className="text-gray-400 text-xs truncate">{xp}/{level * 100} XP</p>
           </div>
           
-          <div className="glass-green rounded-2xl p-4 text-center">
-            <Zap className="w-6 h-6 text-orange-400 mx-auto mb-2" />
-            <h3 className="text-xl font-bold text-orange-400">{streak}</h3>
-            <p className="text-gray-400 text-xs">Trade Streak</p>
+          <div className="glass-green rounded-xl md:rounded-2xl p-2 md:p-4 text-center min-w-0">
+            <Zap className="w-4 h-4 md:w-6 md:h-6 text-orange-400 mx-auto mb-1 md:mb-2" />
+            <h3 className="text-sm md:text-xl font-bold text-orange-400 truncate">{streak}</h3>
+            <p className="text-gray-400 text-xs truncate">Trade Streak</p>
           </div>
           
-          <div className="glass-green rounded-2xl p-4 text-center">
-            <Target className="w-6 h-6 text-pink-400 mx-auto mb-2" />
-            <h3 className="text-xl font-bold text-pink-400">{winRate.toFixed(1)}%</h3>
-            <p className="text-gray-400 text-xs">Win Rate</p>
+          <div className="glass-green rounded-xl md:rounded-2xl p-2 md:p-4 text-center min-w-0">
+            <Target className="w-4 h-4 md:w-6 md:h-6 text-pink-400 mx-auto mb-1 md:mb-2" />
+            <h3 className="text-sm md:text-xl font-bold text-pink-400 truncate">{winRate.toFixed(1)}%</h3>
+            <p className="text-gray-400 text-xs truncate">Win Rate</p>
           </div>
         </motion.div>
 
@@ -423,9 +428,9 @@ function GameContent() {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-4 lg:gap-6 xl:gap-8 w-full overflow-hidden">
           {/* Main Trading Area */}
-          <div className="xl:col-span-3 space-y-6 lg:space-y-8">
+          <div className="xl:col-span-3 space-y-4 lg:space-y-6 xl:space-y-8 min-w-0">
             {/* Market Overview */}
             <MarketOverview marketData={marketData} stocks={stocks} chartData={marketChartData} />
             
@@ -444,34 +449,34 @@ function GameContent() {
                 Live Market
               </h2>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 gap-3 md:gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2 md:gap-3 overflow-hidden">
                 {stocks.map((stock, index) => (
                   <motion.div
                     key={stock.symbol}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.8 + index * 0.1 }}
-                    className="bg-black/20 rounded-xl p-4 hover:bg-black/30 transition-all duration-300 cursor-pointer"
+                    className="bg-black/20 rounded-lg md:rounded-xl p-2 md:p-4 hover:bg-black/30 transition-all duration-300 cursor-pointer min-w-0"
                     onClick={() => setSelectedStock(stock)}
                   >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                    <div className="flex items-center justify-between min-w-0">
+                      <div className="flex items-center space-x-2 md:space-x-3 min-w-0 flex-1">
+                        <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
                           stock.trend === 'up' ? 'bg-emerald-500/20' : 'bg-red-500/20'
                         }`}>
                           {stock.trend === 'up' ? 
-                            <TrendingUp className="w-5 h-5 text-emerald-400" /> :
-                            <TrendingDown className="w-5 h-5 text-red-400" />
+                            <TrendingUp className="w-4 h-4 md:w-5 md:h-5 text-emerald-400" /> :
+                            <TrendingDown className="w-4 h-4 md:w-5 md:h-5 text-red-400" />
                           }
                         </div>
-                        <div>
-                          <h3 className="font-bold">{stock.symbol}</h3>
-                          <p className="text-gray-400 text-xs">{stock.sector}</p>
+                        <div className="min-w-0 flex-1">
+                          <h3 className="font-bold text-sm md:text-base truncate">{stock.symbol}</h3>
+                          <p className="text-gray-400 text-xs truncate">{stock.sector}</p>
                         </div>
                       </div>
                       
-                      <div className="text-right">
-                        <p className="font-bold">${stock.price.toFixed(2)}</p>
+                      <div className="text-right flex-shrink-0">
+                        <p className="font-bold text-sm md:text-base">${stock.price.toFixed(2)}</p>
                         <p className={`text-xs ${stock.trend === 'up' ? 'text-emerald-400' : 'text-red-400'}`}>
                           {stock.changePercent.toFixed(2)}%
                         </p>
@@ -498,7 +503,7 @@ function GameContent() {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-4 lg:space-y-6">
+          <div className="space-y-4 lg:space-y-6 min-w-0 overflow-hidden">
             {/* Advanced Portfolio */}
             <AdvancedPortfolio
               portfolio={portfolio}
@@ -552,6 +557,7 @@ function GameContent() {
         <AnimatePresence>
           {showLogin && <LoginForm onClose={() => setShowLogin(false)} />}
           {showPremium && <PremiumModal onClose={() => setShowPremium(false)} />}
+          {showUpgrade && <UpgradeModal onClose={() => setShowUpgrade(false)} />}
           {showSettings && <Settings onClose={() => setShowSettings(false)} />}
           {showTutorial && <TutorialModal onClose={() => setShowTutorial(false)} />}
           {selectedStock && (
@@ -566,7 +572,7 @@ function GameContent() {
                 initial={{ scale: 0.9 }}
                 animate={{ scale: 1 }}
                 exit={{ scale: 0.9 }}
-                className="bg-gray-900 rounded-3xl p-4 md:p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
+                className="bg-gray-900 rounded-2xl md:rounded-3xl p-3 md:p-6 max-w-2xl w-full mx-2 md:mx-4 max-h-[90vh] overflow-y-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex justify-between items-center mb-6">

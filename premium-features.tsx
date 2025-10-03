@@ -216,11 +216,17 @@ export const TrialBanner = () => {
           </div>
         </div>
         <motion.button
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(245, 158, 11, 0.4)" }}
           whileTap={{ scale: 0.95 }}
-          className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:from-yellow-600 hover:to-orange-600 transition-all duration-300"
+          onClick={() => window.open('https://stripe.com/checkout', '_blank')}
+          className="relative bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-600 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
         >
-          Upgrade Now
+          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="relative flex items-center space-x-2">
+            <Crown className="w-4 h-4" />
+            <span>Upgrade Now</span>
+            <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
+          </div>
         </motion.button>
       </div>
     </motion.div>

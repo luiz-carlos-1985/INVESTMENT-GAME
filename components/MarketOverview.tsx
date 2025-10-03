@@ -82,9 +82,9 @@ export const MarketOverview = ({ marketData, stocks, chartData }: MarketOverview
 
       {/* Market Chart */}
       {chartData.length > 0 && (
-        <div className="bg-black/20 rounded-xl p-4 mb-6">
-          <h3 className="font-bold mb-4">Market Index</h3>
-          <div className="h-32">
+        <div className="bg-black/20 rounded-xl p-3 md:p-4 mb-4 md:mb-6 overflow-hidden">
+          <h3 className="font-bold mb-3 md:mb-4 text-sm md:text-base truncate">Market Index</h3>
+          <div className="h-24 md:h-32 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData}>
                 <defs>
@@ -117,10 +117,10 @@ export const MarketOverview = ({ marketData, stocks, chartData }: MarketOverview
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
         {/* Top Gainers */}
-        <div className="bg-black/20 rounded-xl p-4">
-          <h3 className="font-bold mb-4 flex items-center">
-            <TrendingUp className="w-5 h-5 mr-2 text-emerald-400" />
-            Top Gainers
+        <div className="bg-black/20 rounded-xl p-3 md:p-4 overflow-hidden">
+          <h3 className="font-bold mb-3 md:mb-4 flex items-center text-sm md:text-base">
+            <TrendingUp className="w-4 h-4 md:w-5 md:h-5 mr-2 text-emerald-400 flex-shrink-0" />
+            <span className="truncate">Top Gainers</span>
           </h3>
           <div className="space-y-3">
             {topGainers.map((stock, index) => (
@@ -145,10 +145,10 @@ export const MarketOverview = ({ marketData, stocks, chartData }: MarketOverview
         </div>
 
         {/* Top Losers */}
-        <div className="bg-black/20 rounded-xl p-4">
-          <h3 className="font-bold mb-4 flex items-center">
-            <TrendingDown className="w-5 h-5 mr-2 text-red-400" />
-            Top Losers
+        <div className="bg-black/20 rounded-xl p-3 md:p-4 overflow-hidden">
+          <h3 className="font-bold mb-3 md:mb-4 flex items-center text-sm md:text-base">
+            <TrendingDown className="w-4 h-4 md:w-5 md:h-5 mr-2 text-red-400 flex-shrink-0" />
+            <span className="truncate">Top Losers</span>
           </h3>
           <div className="space-y-3">
             {topLosers.map((stock, index) => (
