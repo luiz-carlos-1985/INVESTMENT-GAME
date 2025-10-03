@@ -206,6 +206,14 @@ npm run start    # Start production server
 3. Commit changes (`git commit -m 'Add amazing feature'`)
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open Pull Request
+   
+## Screenshots:
+
+<img width="1221" height="1027" alt="image" src="https://github.com/user-attachments/assets/57245517-b329-44a3-b73b-3d8ed668f719" />
+
+<img width="1213" height="1036" alt="image" src="https://github.com/user-attachments/assets/85ad0a47-c835-4de2-a86d-e2f09253dba4" />
+
+<img width="1191" height="991" alt="image" src="https://github.com/user-attachments/assets/24c6eea9-d903-47df-96e1-53d541a3eaaf" />
 
 ## License 📄
 
