@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+@layer base {
+  html {
+    font-family: 'Poppins', system-ui, sans-serif;
+  }
+  body {
+    @apply bg-gradient-to-br from-emerald-900 via-teal-900 to-cyan-900;
+  }
+}
+
+@layer components {
+  .glass-green {
+    @apply bg-emerald-500/10 backdrop-blur-lg border border-emerald-500/20 shadow-xl;
+  }
+  
+  .coin-animation {
+    animation: coinFlip 2s ease-in-out infinite;
+  }
+  
+  .profit-glow {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+  }
+  
+  .loss-glow {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+  }
+}
+
+@keyframes coinFlip {
+  0%, 100% { transform: rotateY(0deg) scale(1); }
+  25% { transform: rotateY(90deg) scale(1.1); }
+  50% { transform: rotateY(180deg) scale(1.2); }
+  75% { transform: rotateY(270deg) scale(1.1); }
+}
